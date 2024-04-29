@@ -5,6 +5,8 @@ import numpy as np
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
+MONTHS = ['january', 'february', 'march', 'april', 'may', 'june']
+DAYS_OF_WEEK = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
 def get_filters():
     """
@@ -17,46 +19,41 @@ def get_filters():
     """
     print('\nHello! Let\'s explore some US bikeshare data!')
     # Get user input for city (chicago, new york city, washington).
-    while True:
-        city = input('\nWould you like to see data for Chicago, New York City, or Washington?\n').lower()
-        if city in CITY_DATA:
-            break
-        else:
-            print('\nPlease enter a valid city name.')
+    city = get_valid_input('\nWould you like to see data for Chicago, New York City, or Washington?\n', CITY_DATA.keys())
 
     # Get time filter.
-    while True:
-        time_filter = input('\nWould you like to filter the data by month, day, both, or not at all? Type "none" for no time filter.\n')
-        if time_filter in ['none', 'month', 'day', 'both']:
-            break
-        else:
-            print('\nPlease enter a valid option.')
+    time_filter = get_valid_input('\nWould you like to filter the data by month, day, both, or not at all? Type "none" for no time filter.\n', ['none', 'month', 'day', 'both'])
     
     # Get user input for month (all, january, february, ... , june).
+    month = 'all'
     if time_filter in ['both', 'month']:
-        while True:
-            month = input('\nWhich month? January, February, March, April, May, or June?\n').lower()
-            if month in ['january', 'february', 'march', 'april', 'may', 'june']:
-                break
-            else:
-                print('\nPlease enter a valid option.')
-    else:
-        month = 'all'
+        month = get_valid_input('\nWhich month? January, February, March, April, May, or June?\n', MONTHS)
 
     # Get user input for day of week (all, monday, tuesday, ... sunday).
+    day = 'all'
     if time_filter in ['day', 'both']:
-        while True:
-            day = input('\nWhich day? Please enter Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday.\n').lower()
-            if day in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']:
-                break
-            else:
-                print('\nPlease enter a valid option.')
-    else:
-        day = 'all'
-
+        day = get_valid_input('\nWhich day? Please enter Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday.\n', DAYS_OF_WEEK)
+    
     print('-'*40)
     return city, month, day
 
+def get_valid_input(prompt, valid_options):
+    """
+    Helper function to get a valid input from the user.
+
+    Args:
+        prompt (str): The prompt to display to the user.
+        valid_options (list): List of valid options.
+
+    Returns:
+        str: The valid input from the user.
+    """
+    while True:
+        user_input = input(prompt).lower()
+        if user_input in valid_options:
+            return user_input
+        else:
+            print('\nPlease enter a valid option.')
 
 def load_data(city, month, day):
     """
@@ -103,9 +100,9 @@ def time_stats(df):
         popular_month = df['month'].mode()[0]
         print('The most popular month: ', popular_month)
     
-    # Display the most common day of week if the column exists.
-    popular_weekday = df['day_of_week'].mode()[0]
-    print('\nThe most popular day: ', popular_weekday)
+    # Display the most common day of week.
+    popular_day = df['day_of_week'].mode()[0]
+    print('\nThe most popular day: ', popular_day)
     
     # Display the most common start hour.
     # Extract hour from the Start Time column to create an hour column.
@@ -134,9 +131,9 @@ def station_stats(df):
     popular_end_station = df['End Station'].mode()[0]
     print('\nThe most popular End Station: ', popular_end_station)
 
-    # Display most frequent combination of Start Station and End Station trip.
-    combination_station = df.groupby(['Start Station', 'End Station']).size()
-    frequent_station_combination  = combination_station.idxmax()
+    # Display most frequent combination of start station and end station trip.
+    station_combination = df.groupby(['Start Station', 'End Station']).size()
+    frequent_station_combination  = station_combination.idxmax()
     print('\nThe most popular combination of Start and End Stations: ', frequent_station_combination)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
