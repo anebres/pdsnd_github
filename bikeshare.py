@@ -103,7 +103,7 @@ def time_stats(df):
         popular_month = df['month'].mode()[0]
         print('The most popular month: ', popular_month)
     
-    # Display the most common day of week.
+    # Display the most common day of week if the column exists.
     popular_weekday = df['day_of_week'].mode()[0]
     print('\nThe most popular day: ', popular_weekday)
     
@@ -126,15 +126,15 @@ def station_stats(df):
     print('\nCalculating The Most Popular Stations and Trip...\n')
     start_time = time.time()
 
-    # Display most commonly used start station.
+    # Display most commonly used Start Station.
     popular_start_station = df['Start Station'].mode()[0]
     print('The most popular Start Station: ', popular_start_station)
     
-    # Display most commonly used end station.
+    # Display most commonly used End Station.
     popular_end_station = df['End Station'].mode()[0]
     print('\nThe most popular End Station: ', popular_end_station)
 
-    # Display most frequent combination of start station and end station trip.
+    # Display most frequent combination of Start Station and End Station trip.
     combination_station = df.groupby(['Start Station', 'End Station']).size()
     frequent_station_combination  = combination_station.idxmax()
     print('\nThe most popular combination of Start and End Stations: ', frequent_station_combination)
@@ -173,11 +173,11 @@ def user_stats(df):
     print('\nCalculating User Stats...\n')
     start_time = time.time()
  
-    # Display counts of user types.
+    # Display counts of User Types.
     user_types = df['User Type'].value_counts()
     print(user_types, '\n')
 
-    # Display counts of gender.
+    # Display counts of Gender.
     if 'Gender' in df.columns:
         gender = df['Gender'].value_counts()
         print(gender,'\n')
