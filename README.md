@@ -12,5 +12,5 @@ Data provided from a bike sharing system, [Motivate](https://motivateco.com/), a
 * washington.csv
 
 ### Credits
-This is a Python project that was completed as a component of [Udacity's](https://www.udacity.com/) [Programming for Data Science with Python](https://www.udacity.com/enrollment/nd104). 
+This Python project that was completed as part of [Udacity's](https://www.udacity.com/) [Programming for Data Science with Python](https://www.udacity.com/enrollment/nd104) course. 
 
