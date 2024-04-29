@@ -101,8 +101,8 @@ def time_stats(df):
         print('The most popular month: ', popular_month)
     
     # Display the most common day of week.
-    popular_weekday = df['day_of_week'].mode()[0]
-    print('\nThe most popular day: ', popular_weekday)
+    popular_day = df['day_of_week'].mode()[0]
+    print('\nThe most popular day: ', popular_day)
     
     # Display the most common start hour.
     # Extract hour from the Start Time column to create an hour column.
@@ -132,8 +132,8 @@ def station_stats(df):
     print('\nThe most popular End Station: ', popular_end_station)
 
     # Display most frequent combination of start station and end station trip.
-    combination_station = df.groupby(['Start Station', 'End Station']).size()
-    frequent_station_combination  = combination_station.idxmax()
+    station_combination = df.groupby(['Start Station', 'End Station']).size()
+    frequent_station_combination  = station_combination.idxmax()
     print('\nThe most popular combination of Start and End Stations: ', frequent_station_combination)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
